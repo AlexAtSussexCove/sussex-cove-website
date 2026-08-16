@@ -26,7 +26,7 @@ as it is. Only the records below change.
    | A | @ | 185.199.110.153 |
    | A | @ | 185.199.111.153 |
 
-3. **Add one `CNAME` record**: Name `www`, Value `<your-github-username>.github.io`
+3. **Add one `CNAME` record**: Name `www`, Value `alexatsussexcove.github.io`
 4. In this repository on GitHub: **Settings → Pages → Custom domain**, enter
    `thesussexcovegardeningcompany.co.uk` and save. Once it verifies, tick **Enforce HTTPS**.
 
