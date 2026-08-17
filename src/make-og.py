@@ -43,7 +43,9 @@ subprocess.run(['qlmanage', '-t', '-s', '1200', '-o', str(work), str(svg_path)],
 card = Image.open(png_path).convert('RGBA')
 card = card.crop((0, (card.height - 630) // 2, 1200, (card.height - 630) // 2 + 630))
 
-badge = Image.open(src.parent / 'docs' / 'logo.webp').convert('RGBA').resize((450, 450), Image.LANCZOS)
-card.alpha_composite(badge, (66, (630 - 450) // 2))
+mark = Image.open(src.parent / 'docs' / 'mark.webp').convert('RGBA')
+scale = 450 / max(mark.size)                      # fit to 450px, keep its own aspect
+mark = mark.resize((round(mark.size[0] * scale), round(mark.size[1] * scale)), Image.LANCZOS)
+card.alpha_composite(mark, (66, (630 - mark.size[1]) // 2))
 card.convert('RGB').save(out, optimize=True)
 print(f"wrote {out} {out.stat().st_size/1024:.1f} KB")

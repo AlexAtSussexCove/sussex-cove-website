@@ -17,6 +17,10 @@
 <meta name="twitter:image" content="https://thesussexcovegardeningcompany.co.uk/og-image.png">
 <meta name="theme-color" content="#f7f4ec">
 <link rel="canonical" href="https://thesussexcovegardeningcompany.co.uk/">
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
+<link rel="preconnect" href="https://p.typekit.net" crossorigin>
+<link rel="stylesheet" href="https://use.typekit.net/esq3puh.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://use.typekit.net/esq3puh.css"></noscript>
 <link rel="icon" href="favicon.png" sizes="any">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script type="application/ld+json">
@@ -84,7 +88,7 @@
   --shadow:0 18px 50px -18px rgba(49,70,90,.22);
   --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
   --disp:'Julius Sans One','Avenir Next','Trebuchet MS',sans-serif;
-  --body:'Jost','Avenir Next','Helvetica Neue',sans-serif;
+  --body:"mendl-sans-dusk",'Jost','Avenir Next','Helvetica Neue',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -176,8 +180,8 @@ a{color:inherit}
 }
 .nav.scrolled .nav-in{padding-block:.62rem}
 .brand{display:flex;align-items:center;gap:.8rem;text-decoration:none;margin-right:auto}
-.brand img{width:46px;height:46px;transition:width .35s ease,height .35s ease}
-.nav.scrolled .brand img{width:39px;height:39px}
+.brand img{width:46px;height:auto;transition:width .35s ease}
+.nav.scrolled .brand img{width:39px}
 .brand-name{display:flex;flex-direction:column;line-height:1.32}
 .brand-name b{font-family:var(--disp);font-weight:400;font-size:.86rem;letter-spacing:.24em}
 .brand-name span{font-family:var(--disp);font-size:.55rem;letter-spacing:.42em;color:var(--sage-deep)}
@@ -219,7 +223,7 @@ a{color:inherit}
   background:radial-gradient(closest-side,rgba(250,248,241,.92),rgba(250,248,241,.55) 55%,rgba(250,248,241,0) 78%);
   pointer-events:none;
 }
-.hero-mark{width:clamp(190px,25vw,290px);height:auto;margin-bottom:1.1rem;filter:drop-shadow(0 20px 40px rgba(49,70,90,.16))}
+.hero-mark{width:clamp(190px,24vw,280px);height:auto;margin-bottom:1.1rem;filter:drop-shadow(0 20px 40px rgba(49,70,90,.16))}
 .hero h1{
   font-family:var(--disp);
   font-weight:400;
@@ -361,7 +365,7 @@ section{position:relative}
 .about-sign .sig{font-family:var(--serif);font-style:italic;font-weight:500;font-size:2.5rem;color:var(--ink-deep)}
 .about-sign small{font-family:var(--disp);font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-soft)}
 .about-mark{position:relative;display:flex;justify-content:center}
-.about-mark img{width:min(360px,78vw);height:auto;filter:drop-shadow(0 26px 48px rgba(49,70,90,.2));animation:floaty 7s ease-in-out infinite}
+.about-mark img{width:min(320px,74vw);height:auto;filter:drop-shadow(0 26px 48px rgba(49,70,90,.2));animation:floaty 7s ease-in-out infinite}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 
 /* ---------- STEPS ---------- */
@@ -434,7 +438,7 @@ a.social-chip:hover{border-color:var(--chalk);color:var(--chalk);transform:trans
 /* ---------- FOOTER ---------- */
 .footer{background:var(--ink-deep);color:var(--sea);padding:2.6rem 0 2.9rem;border-top:1px solid rgba(247,244,236,.12)}
 .footer-in{display:flex;flex-direction:column;align-items:center;gap:1.1rem;text-align:center}
-.footer-in img{width:64px;height:64px}
+.footer-in img{width:66px;height:auto}
 .footer p{font-size:.85rem;line-height:1.8;color:rgba(194,211,216,.8)}
 .footer b{font-family:var(--disp);font-weight:400;letter-spacing:.22em;font-size:.78rem;color:var(--chalk)}
 
@@ -578,7 +582,7 @@ a.social-chip:hover{border-color:var(--chalk);color:var(--chalk);transform:trans
 <header class="nav" id="nav">
   <div class="nav-in">
     <a class="brand" href="#top" aria-label="The Sussex Cove Gardening Company, back to top">
-      <img src="__LOGO_SM_SRC__" alt="" width="192" height="192" fetchpriority="high">
+      <img src="__MARK_SM_SRC__" alt="" width="226" height="208" fetchpriority="high">
       <span class="brand-name">
         <b>THE SUSSEX COVE</b>
         <span>GARDENING COMPANY</span>
@@ -654,7 +658,7 @@ a.social-chip:hover{border-color:var(--chalk);color:var(--chalk);transform:trans
   <div class="hero-glow" aria-hidden="true"></div>
 
   <div class="hero-inner" data-hero-text>
-    <img class="hero-mark rise d1" src="__MEDALLION_SRC__" width="640" height="640" fetchpriority="high"
+    <img class="hero-mark rise d1" src="__MARK_SRC__" width="566" height="520" fetchpriority="high"
          alt="The Sussex Cove Gardening Company emblem: chalk cliffs above a curving beach, the pier out on the sea, and leaves in the foreground">
     <h1 class="rise d2">THE SUSSEX COVE</h1>
     <div class="hero-rule rise d3" aria-hidden="true"><i></i></div>
@@ -749,7 +753,7 @@ a.social-chip:hover{border-color:var(--chalk);color:var(--chalk);transform:trans
         </div>
       </div>
       <div class="about-mark reveal" style="--d:.15s" aria-hidden="true">
-        <img src="__LOGO_SRC__" alt="" width="768" height="768" loading="lazy" decoding="async">
+        <img src="__MARK_SRC__" alt="" width="566" height="520" loading="lazy" decoding="async">
       </div>
     </div>
   </div>
@@ -894,7 +898,7 @@ a.social-chip:hover{border-color:var(--chalk);color:var(--chalk);transform:trans
 
 <footer class="footer">
   <div class="wrap footer-in">
-    <img src="__LOGO_SM_SRC__" alt="" width="192" height="192" loading="lazy" decoding="async">
+    <img src="__MARK_SM_SRC__" alt="" width="226" height="208" loading="lazy" decoding="async">
     <b>THE SUSSEX COVE GARDENING COMPANY</b>
     <p>
       © <span id="yr">2026</span> The Sussex Cove Gardening Company Ltd · Registered in England and Wales, company no. 16202925<br>

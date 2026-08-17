@@ -16,12 +16,11 @@ page = page.replace('/*__FONTS__*/', (src / 'fonts' / 'fonts.css').read_text())
 
 mode = sys.argv[1] if len(sys.argv) > 1 else 'index'
 
-# placeholder -> file in docs/. The nav and footer use the small badge so the 768px
-# master never enters the critical path just to paint a 46px mark.
+# placeholder -> file in docs/. The nav and footer use the small mark so the full-size
+# master never enters the critical path just to paint a 46px icon.
 IMAGES = [
-    ('__LOGO_SM_SRC__', 'logo-sm.webp'),
-    ('__LOGO_SRC__', 'logo.webp'),
-    ('__MEDALLION_SRC__', 'medallion.webp'),
+    ('__MARK_SM_SRC__', 'mark-sm.webp'),
+    ('__MARK_SRC__', 'mark.webp'),
 ]
 
 if mode == 'index':

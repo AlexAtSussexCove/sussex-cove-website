@@ -43,16 +43,15 @@ Afterwards, two five-minute jobs worth doing:
 
 - `docs/` · **the published site**. Everything in here is what visitors get.
   - `index.html` (built; fonts embedded as data URIs, so there are no font requests)
-  - `logo.webp` · the round badge with the ring lettering, 768px, used only by the large About instance
-  - `logo-sm.webp` · the same badge at 192px, used by the header (46px) and footer (64px). Two sizes on
-    purpose: the header mark loads immediately and above the fold, so pointing it at the 768px master put
-    82 KB in the critical path to paint a 46px icon and cost ~250 ms of load time, measured. Keep them split.
-  - `medallion.webp` · the round scene with no lettering (the hero image, and the largest paint element)
+  - `mark.webp` · Alex's logo at its native 566x520, used by the hero and the About section
+  - `mark-sm.webp` · the same mark at 226x208, used by the header (46px) and footer (66px). Two sizes on
+    purpose: the header mark loads immediately and above the fold, so pointing it at the full-size master
+    put unnecessary bytes in the critical path and measurably delayed the hero image. Keep them split.
   - `favicon.png`, `apple-touch-icon.png`, `og-image.png` (social share card), `robots.txt`, `sitemap.xml`
   - `.nojekyll` · stops GitHub trying to run Jekyll over the folder
 - `src/page.html` · **the file to edit**. The same page, but with a `/*__FONTS__*/` placeholder instead of
-  ~135 KB of base64, and `__LOGO_SM_SRC__` / `__LOGO_SRC__` / `__MEDALLION_SRC__` placeholders for the
-  images (mapped in `build.py`'s `IMAGES` list).
+  ~135 KB of base64, and `__MARK_SM_SRC__` / `__MARK_SRC__` placeholders for the images (mapped in
+  `build.py`'s `IMAGES` list).
 - `src/build.py` · assembles the page. Run from `src/`:
 
 ```bash
@@ -63,30 +62,54 @@ cd src && python3 build.py index > ../docs/index.html
 - `src/make-og.py` · regenerates `docs/og-image.png` (the social share card) from the badge and the brand
   fonts. Run: `python3 make-og.py <scratch-dir> <out.png>`.
 - `src/fonts/` · woff2 subsets plus the generated `fonts.css` (Cormorant Garamond, Julius Sans One, Jost).
-- `artwork/` · Alex's original artwork as supplied (`logo-badge-master.jpg` was "Logo Image 2",
-  `medallion-master.png` was "Center main"). Masters: do not edit, cut from these.
+- `artwork/` · Alex's original artwork exactly as supplied. Masters: never edit these, derive from them.
+  - `logo-mark-master.psd` · **current logo** (was `NewLogoOnly14082026.psd`), 566x520, 16-bit CMYK with
+    a real alpha channel. Everything on the site derives from this.
+  - `logo-badge-master.jpg`, `medallion-master.png` · the previous artwork, superseded 2026-08-17.
 
 ## The logo artwork
 
-Both originals are square with opaque backgrounds. Each was cut to its circle so it sits on any section
-background (the footer is dark navy, so a square white image would have shown as a box):
+`artwork/logo-mark-master.psd` arrives already cut out, with genuine transparency, so **nothing about it
+is altered** for the web. The only operations applied are:
 
-- **`logo-badge-master.jpg` → `logo.webp` / `logo-sm.webp`**: the badge's outer ring touches all four
-  frame edges, so an exact circular alpha mask (supersampled 4x for a smooth edge) was enough.
-- **`medallion-master.png` → `medallion.webp`**: the leaves overhang the circle, so a hard circular crop
-  would have sliced them off. Instead: crop off a 6px grey screenshot band at the bottom, least-squares
-  fit the circle from its clean top arc, then keep everything inside the circle opaque and matte the
-  outside by colour distance from the cream background (#FCF8F5). That keeps the overhanging leaves with
-  clean antialiased edges.
+1. A colour-managed conversion from 16-bit CMYK to sRGB (`sips --matchTo` the sRGB profile). Unavoidable:
+   the web is RGB. PIL cannot read 16-bit CMYK PSDs, hence `sips`.
+2. Proportional downscaling (Lanczos) to the two sizes above, then WebP at quality 92.
 
-Both are WebP: the badge is 82 KB as WebP versus 581 KB as PNG. WebP works in every browser since Safari
-14 (2020), and the page already needs a 2020+ browser for `clamp()` and `backdrop-filter`.
+No cropping, no masking, no recolouring, no background added. If the artwork is ever replaced, repeat
+exactly those two steps.
+
+Two things worth knowing:
+
+- **It is not square.** 566x520, because the leaf sprig overhangs the circle at the lower left. Every CSS
+  rule that sizes it therefore sets `width` with `height:auto`. Setting both would squash it.
+- **566px is the whole of the resolution there is.** That caps how large it can be displayed before
+  softening on a retina screen, which is why the hero is capped at 280px and the About instance at 320px.
+  If Alex ever supplies a larger export, those caps can rise.
+
+On the dark navy footer the mark's own navy outline disappears into the background, leaving the light
+interior reading as a coin. A light disc was trialled behind it to restore the crisp edge and **rejected**:
+at the real 66px size the disc peeked past the artwork and read as a misaligned halo. Plain is correct.
 
 ## Design
 
-Palette and type come from the logo: ink `#31465a`, chalk `#f7f4ec`, sage `#93a48d`, sea `#c2d3d8`, plus
-Alex's brand teal `#395e5c` for accents. Julius Sans One matches the tracked caps on his business card;
-Cormorant Garamond and Jost carry headings and body text.
+Palette comes from the logo: ink `#31465a`, chalk `#f7f4ec`, sage `#93a48d`, sea `#c2d3d8`, plus Alex's
+brand teal `#395e5c` for accents.
+
+**Type.** Body text uses **Mendl Sans Dusk**, Alex's own licensed face, served from his Adobe Fonts kit
+(`https://use.typekit.net/esq3puh.css`). Notes on that:
+
+- The kit is loaded **without blocking first paint** (`media="print"` then swapped by `onload`, with a
+  `<noscript>` fallback), and the embedded Jost stays in the stack behind it. If Adobe is slow, blocked,
+  or the kit is ever deleted, the page still renders correctly in Jost rather than breaking.
+- Adobe's licence does **not** permit downloading and self-hosting those font files, so unlike the other
+  faces this one cannot be embedded, and it is the site's only third-party request.
+- The kit contains Mendl Sans Dusk only (weights 300/400/700, no italics). **June Light**, the logo font,
+  is not in it, and is not needed: the wordmark is artwork.
+- If the fonts ever stop appearing, check the domain list on the Adobe Fonts web project first.
+
+Cormorant Garamond carries the headings and the italic tagline; Julius Sans One carries the tracked caps
+of the wordmark and the small labels.
 
 The hero is the medallion over an illustrated coastal wash (sky, a soft-gradient horizon, foreshore,
 framing leaves, drifting gulls). It originally also had hand-drawn chalk cliffs and a pier; those were
@@ -109,6 +132,7 @@ Then open <http://localhost:4180>.
 - The Facebook button points at a share link; a canonical page URL would be better.
 - An Instagram "recent work" feed was discussed but not built. It needs a professional/creator account
   (Alex has one), a one-time authorisation, and a scheduled job to pull recent posts.
-- Alex's own fonts (June Light for the logo, Mendl Sans for text) are not used: a desktop font purchase
-  does not normally include a web-embedding licence, so that needs checking before they can go in. The
-  current faces were chosen to match closely.
+- A larger export of the logo would let the hero and About instances be displayed bigger; 566px is the
+  current ceiling.
+- The old Azure deployment at `sussexcovegardening.com` still serves a superseded build. It is being
+  retired, so it is deliberately not being kept in step.
