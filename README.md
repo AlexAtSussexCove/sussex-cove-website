@@ -2,8 +2,45 @@
 
 The website for The Sussex Cove Gardening Company (Alex, gardener, Shoreham-by-Sea / Worthing coast).
 
-Hosted free on **GitHub Pages**, published from the `docs/` folder on `main`. There is no server, no
-database and no build pipeline to babysit: pushing to `main` publishes within a minute or two.
+Hosted free on **GitHub Pages**, published from the `docs/` folder on `main`. **`docs/index.html` IS the
+website.** There is no build step, no server and no database: edit that file, and the live site updates
+within a minute or two.
+
+---
+
+## For Alex: changing the words on the website
+
+You can do this yourself on GitHub, in a browser, with no software to install.
+
+1. In this repository, click the **`docs`** folder, then click **`index.html`**.
+2. Click the **pencil icon** (top right) to edit it.
+3. Press **Ctrl+F** (**Cmd+F** on a Mac) and type a few words of the text you want to change, to jump
+   straight to it.
+4. Change **only the words**. Everything inside angle brackets, like `<p>` or `</a>`, is machinery that
+   makes the page work. Leave those alone.
+5. Scroll to the bottom, click **Commit changes**, then **Commit changes** again on the box that appears.
+6. Wait a minute or two and refresh the website.
+
+**If something goes wrong, nothing is lost.** Click the **History** tab on the repository, open your
+change, and click the **Revert** button. The site goes back to how it was.
+
+Some things appear more than once in the file, so change every one or they will disagree with each other:
+
+| To change | Search for | How many places |
+|---|---|---|
+| Phone number | `07356` | 4 |
+| Email address | `alex@` | 3 |
+| The list of towns | `Shoreham-by-Sea` | 7 |
+| "Beautiful gardens by the sea" | `Beautiful gardens` | 3 |
+| Your "note from Alex" paragraph | `Hello, I'm Alex` | 1 |
+| A service and its description | e.g. `Lawn mowing` | 3 |
+
+Two of those places are invisible on the page: the bit at the very top of the file that tells Google
+about the business, and the text that shows when someone shares the link. That is why the counts are
+higher than what you can see.
+
+**What not to edit here:** the pictures (`mark.webp`, `mark-sm.webp`), the sharing image
+(`og-image.png`), and anything in `fonts/`. Ask for those to be redone properly.
 
 ---
 
@@ -49,19 +86,13 @@ Afterwards, two five-minute jobs worth doing:
     put unnecessary bytes in the critical path and measurably delayed the hero image. Keep them split.
   - `favicon.png`, `apple-touch-icon.png`, `og-image.png` (social share card), `robots.txt`, `sitemap.xml`
   - `.nojekyll` · stops GitHub trying to run Jekyll over the folder
-- `src/page.html` · **the file to edit**. The same page, but with a `/*__FONTS__*/` placeholder instead of
-  ~135 KB of base64, and `__MARK_SM_SRC__` / `__MARK_SRC__` placeholders for the images (mapped in
-  `build.py`'s `IMAGES` list).
-- `src/build.py` · assembles the page. Run from `src/`:
-
-```bash
-cd src && python3 build.py index > ../docs/index.html
-```
-
-  `build.py artifact` emits a body-only variant with the images inlined, for single-file previews.
-- `src/make-og.py` · regenerates `docs/og-image.png` (the social share card) from the badge and the brand
-  fonts. Run: `python3 make-og.py <scratch-dir> <out.png>`.
-- `src/fonts/` · woff2 subsets plus the generated `fonts.css` (Cormorant Garamond, Julius Sans One, Jost).
+  - `fonts/` · the woff2 files, referenced by `@font-face` rules inside `index.html`. Subsets pulled from
+    Google Fonts (Cormorant Garamond 500/600 + italic, Julius Sans One, Jost 300-600 variable).
+- `tools/` · optional helpers. **Nothing here is needed to run or edit the site.**
+  - `make-og.py` · regenerates `docs/og-image.png`, the image shown when the link is shared.
+    Run: `python3 tools/make-og.py <scratch-dir> <out.png>`.
+  - `make-preview.py` · emits a single self-contained copy of the site for previewing.
+    Run: `python3 tools/make-preview.py > preview.html`.
 - `artwork/` · Alex's original artwork exactly as supplied. Masters: never edit these, derive from them.
   - `logo-mark-master.psd` · **current logo** (was `NewLogoOnly14082026.psd`), 566x520, 16-bit CMYK with
     a real alpha channel. Everything on the site derives from this.
@@ -126,6 +157,11 @@ python3 -m http.server 4180 --directory docs
 ```
 
 Then open <http://localhost:4180>.
+
+The fonts used to be embedded in `index.html` as ~135 KB of base64, which made the published file
+179 KB and effectively unreadable to edit by hand. They now sit in `docs/fonts/` and are referenced by
+URL: the page dropped to 48 KB, renders pixel-for-pixel identically (verified by diffing screenshots),
+paints sooner, and can be edited by a human. Do not re-embed them.
 
 ## Still open
 

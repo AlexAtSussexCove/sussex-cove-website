@@ -10,12 +10,12 @@ thumbnail, so the card is laid out on a 1200x1200 canvas and centre-cropped to 6
 import base64, pathlib, subprocess, sys
 from PIL import Image
 
-src = pathlib.Path(__file__).parent
+root = pathlib.Path(__file__).resolve().parent.parent
 work = pathlib.Path(sys.argv[1]); work.mkdir(parents=True, exist_ok=True)
 out = pathlib.Path(sys.argv[2])
 
 def font(name):
-    return base64.b64encode((src / 'fonts' / name).read_bytes()).decode()
+    return base64.b64encode((root / 'docs' / 'fonts' / name).read_bytes()).decode()
 
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 1200 1200">
 <defs><style>
@@ -43,7 +43,7 @@ subprocess.run(['qlmanage', '-t', '-s', '1200', '-o', str(work), str(svg_path)],
 card = Image.open(png_path).convert('RGBA')
 card = card.crop((0, (card.height - 630) // 2, 1200, (card.height - 630) // 2 + 630))
 
-mark = Image.open(src.parent / 'docs' / 'mark.webp').convert('RGBA')
+mark = Image.open(root / 'docs' / 'mark.webp').convert('RGBA')
 scale = 450 / max(mark.size)                      # fit to 450px, keep its own aspect
 mark = mark.resize((round(mark.size[0] * scale), round(mark.size[1] * scale)), Image.LANCZOS)
 card.alpha_composite(mark, (66, (630 - mark.size[1]) // 2))
