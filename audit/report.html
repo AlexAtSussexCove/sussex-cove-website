@@ -77,6 +77,35 @@ ul{padding-left:20px;max-width:66ch}li{margin-bottom:7px}
 .foot{margin-top:60px;padding-top:22px;border-top:1px solid var(--rule);font-family:var(--sans);font-size:13px;color:var(--ink-3)}
 a{color:var(--navy)}
 .tbl-wrap{overflow-x:auto}
+
+@media print{
+  /* force the light palette regardless of the printing machine's theme */
+  :root{
+    --paper:#ffffff; --card:#ffffff; --ink:#1e2b36; --ink-2:#41525f; --ink-3:#6b7c87;
+    --rule:#d8d8d0; --navy:#31465a; --sage:#5f7d6f;
+    --good:#2f7d55; --warn:#8a5f10; --crit:#a8402f;
+    --good-bg:#e8f2ec; --warn-bg:#f8f0dd; --crit-bg:#f9e9e6;
+  }
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{size:A4;margin:15mm 14mm}
+  body{font-size:10.5pt;line-height:1.5}
+  .wrap{max-width:none;padding:0}
+  h1{font-size:23pt;margin-bottom:6px}
+  h2{font-size:14pt;margin:20pt 0 4pt;break-after:avoid;page-break-after:avoid}
+  h3{font-size:11pt}
+  p,li{max-width:none}
+  .lede{font-size:12pt}
+  .stat,.task,blockquote,table{break-inside:avoid;page-break-inside:avoid}
+  .card.keep{break-inside:avoid;page-break-inside:avoid}
+  .card{margin:10pt 0;padding:12pt 14pt}
+  .grid{gap:8pt}
+  .rule{margin:16pt 0}
+  .foot{margin-top:22pt;padding-top:10pt}
+  a{text-decoration:none}
+  /* keep each action block with its heading */
+  .task{padding:9pt 0}
+  .task p{font-size:10pt}
+}
 </style>
 
 <div class="wrap">
@@ -100,7 +129,7 @@ a{color:var(--navy)}
   <div class="stat"><div class="num" style="color:var(--warn)">#1</div><p>Position held by a dead web address when someone searches your business name.</p></div>
 </div>
 
-<div class="card">
+<div class="card keep">
   <span class="chip c-warn">Being handled</span>
   <h3 style="margin-top:10px">That dead address at the top of Google</h3>
   <p>When your site was being built it lived temporarily at <code>sussexcovegardening.com</code>. That temporary address is switched off now, but Google hasn't caught up, so it still sits at the top of the results for your own business name, and your real website isn't showing at all yet.</p>
