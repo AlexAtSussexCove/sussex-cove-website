@@ -40,7 +40,8 @@ about the business, and the text that shows when someone shares the link. That i
 higher than what you can see.
 
 **What not to edit here:** the pictures (`mark.webp`, `mark-sm.webp`), the sharing image
-(`og-image.png`), and anything in `fonts/`. Ask for those to be redone properly.
+(`og-image.png`), and anything in `fonts/`. Also leave the `<behold-widget>` tag and the
+script next to it alone. Ask for those to be redone properly.
 
 ---
 
@@ -121,6 +122,19 @@ Two things worth knowing:
 On the dark navy footer the mark's own navy outline disappears into the background, leaving the light
 interior reading as a coin. A light disc was trialled behind it to restore the crisp edge and **rejected**:
 at the real 66px size the disc peeked past the artwork and read as a misaligned halo. Plain is correct.
+
+## The Instagram gallery ("Recent work")
+
+The grid in the Recent work section feeds itself from Alex's Instagram through his **Behold** account
+(behold.so, free tier: 6 posts, refreshed roughly daily). The page loads Behold's widget script and
+their image CDN; none of their three hosts sets cookies (checked), so the site still needs no cookie
+banner.
+
+**If the gallery ever goes blank:** Alex signs in at behold.so and reconnects Instagram. Behold emails
+the account holder when that is needed. Nothing in this repository has to change; the `feed-id` on the
+`<behold-widget>` tag only changes if Alex creates a brand-new feed in their dashboard.
+
+This and Adobe Fonts are the site's only third-party requests.
 
 ## Design
 

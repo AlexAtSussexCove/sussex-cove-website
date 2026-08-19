@@ -19,6 +19,8 @@
 <link rel="canonical" href="https://thesussexcovegardeningcompany.co.uk/">
 <link rel="preload" href="fonts/JuliusSansOne-normal-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/CormorantGaramond-italic-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://w.behold.so" crossorigin>
+<link rel="dns-prefetch" href="https://cdn2.behold.pictures">
 <link rel="preconnect" href="https://use.typekit.net" crossorigin>
 <link rel="preconnect" href="https://p.typekit.net" crossorigin>
 <link rel="stylesheet" href="https://use.typekit.net/esq3puh.css" media="print" onload="this.media='all'">
@@ -379,6 +381,13 @@ section{position:relative}
 .about-mark img{width:min(320px,74vw);height:auto;filter:drop-shadow(0 26px 48px rgba(49,70,90,.2));animation:floaty 7s ease-in-out infinite}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 
+/* ---------- RECENT WORK (Instagram via Behold) ---------- */
+.work{background:var(--paper)}
+.work-head{text-align:center;display:flex;flex-direction:column;align-items:center}
+.work-feed{margin-top:2.6rem;min-height:240px}
+behold-widget{display:block}
+.work-cta{margin-top:2.4rem;display:flex;justify-content:center}
+
 /* ---------- STEPS ---------- */
 .steps-sec{background:var(--cream)}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3.4rem;position:relative}
@@ -614,6 +623,7 @@ a.social-chip:hover{border-color:var(--chalk);color:var(--chalk);transform:trans
       <ul class="nav-links" id="navLinks">
         <li><a href="#services">Services</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#work">Recent work</a></li>
         <li><a href="#areas">Areas</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a class="btn solid nav-phone" href="tel:+447356275577">07356 275 577</a></li>
@@ -777,6 +787,36 @@ a.social-chip:hover{border-color:var(--chalk);color:var(--chalk);transform:trans
       <div class="about-mark reveal" style="--d:.15s" aria-hidden="true">
         <img src="mark.webp" alt="" width="566" height="520" loading="lazy" decoding="async">
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RECENT WORK ============
+     This gallery feeds itself from Alex's Instagram via his Behold account
+     (behold.so). If it ever goes blank, Alex logs into Behold and reconnects
+     Instagram; nothing on this page needs changing. -->
+<section class="sec work" id="work">
+  <div class="wrap">
+    <div class="work-head">
+      <p class="label center reveal">Recent work</p>
+      <h2 class="display reveal" style="--d:.08s">Straight from the gardens.</h2>
+      <p class="lede reveal" style="--d:.16s">The latest jobs, pulled live from Alex's Instagram. Give it a follow to watch gardens come back to life.</p>
+    </div>
+    <div class="work-feed">
+      <behold-widget feed-id="a34aenPD5YatfzmSgSqg"></behold-widget>
+      <script>
+        (() => {
+          if(window.__bhldScript)return;window.__bhldScript=true;
+          const d=document,s=d.createElement("script");s.type="module";
+          s.src="https://w.behold.so/widget.js";setTimeout(()=>{d.head.append(s);},0);
+        })();
+      </script>
+    </div>
+    <div class="work-cta reveal">
+      <a class="btn ghost" href="https://www.instagram.com/thesussexcovegardeningcompany/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="16.8" cy="7.2" r="0.9" fill="currentColor" stroke="none"/></svg>
+        Follow on Instagram
+      </a>
     </div>
   </div>
 </section>
