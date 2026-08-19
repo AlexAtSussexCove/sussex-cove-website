@@ -1,0 +1,197 @@
+<title>Sussex Cove Search Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+:root{
+  --paper:#fbfaf7;
+  --card:#ffffff;
+  --ink:#1e2b36;
+  --ink-2:#4a5b68;
+  --ink-3:#75858f;
+  --rule:#e2e2da;
+  --navy:#31465a;
+  --sage:#5f7d6f;
+  --good:#2f7d55;
+  --warn:#9a6b12;
+  --crit:#a8402f;
+  --good-bg:#e8f2ec;
+  --warn-bg:#f8f0dd;
+  --crit-bg:#f9e9e6;
+  --sans:'Instrument Sans',system-ui,sans-serif;
+  --serif:'Newsreader',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#14191e; --card:#1b2229; --ink:#e9eef1; --ink-2:#b3c0c9; --ink-3:#8998a3;
+    --rule:#2c353d; --navy:#9fc0d8; --sage:#8fb3a0;
+    --good:#6fce9b; --warn:#e8bd6a; --crit:#f0907e;
+    --good-bg:#182f24; --warn-bg:#33290f; --crit-bg:#341c18;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14191e; --card:#1b2229; --ink:#e9eef1; --ink-2:#b3c0c9; --ink-3:#8998a3;
+  --rule:#2c353d; --navy:#9fc0d8; --sage:#8fb3a0;
+  --good:#6fce9b; --warn:#e8bd6a; --crit:#f0907e;
+  --good-bg:#182f24; --warn-bg:#33290f; --crit-bg:#341c18;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:clamp(28px,5vw,64px) clamp(20px,5vw,44px) 90px}
+h1,h2,h3,.label,.chip,.num,th,.btn{font-family:var(--sans)}
+h1{font-size:clamp(30px,5vw,44px);line-height:1.1;letter-spacing:-.02em;font-weight:600;margin:0 0 10px;text-wrap:balance}
+h2{font-size:clamp(20px,2.8vw,26px);font-weight:600;letter-spacing:-.01em;margin:52px 0 6px;text-wrap:balance}
+h3{font-size:17px;font-weight:600;margin:26px 0 4px}
+p{margin:0 0 14px;max-width:66ch}
+.label{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--ink-3);font-weight:500}
+.lede{font-size:19px;color:var(--ink-2);max-width:60ch}
+.rule{height:1px;background:var(--rule);border:0;margin:34px 0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--sans);font-size:13px;color:var(--ink-3);margin-top:14px}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:20px 22px;margin:18px 0}
+.grid{display:grid;gap:14px}
+@media(min-width:640px){.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 18px}
+.stat .num{font-size:30px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat p{font-size:14px;color:var(--ink-2);margin:4px 0 0;font-family:var(--sans)}
+.chip{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.c-good{background:var(--good-bg);color:var(--good)}
+.c-warn{background:var(--warn-bg);color:var(--warn)}
+.c-crit{background:var(--crit-bg);color:var(--crit)}
+.scores{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:14px;margin:10px 0 0}
+.scores th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);font-weight:500;padding:0 10px 8px 0;border-bottom:1px solid var(--rule)}
+.scores td{padding:11px 10px 11px 0;border-bottom:1px solid var(--rule);vertical-align:middle}
+.scores td:last-child,.scores th:last-child{text-align:right;padding-right:0}
+.bar{height:6px;border-radius:99px;background:var(--rule);overflow:hidden;min-width:70px}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--sage)}
+.sc{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.task{display:grid;gap:4px 14px;grid-template-columns:auto 1fr;align-items:start;padding:16px 0;border-bottom:1px solid var(--rule)}
+.task:last-child{border-bottom:0}
+.task .n{font-family:var(--sans);font-weight:600;font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums;padding-top:2px}
+.task h3{margin:0 0 3px}
+.task p{margin:0;font-size:15.5px;color:var(--ink-2)}
+.task .tags{grid-column:2;display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+blockquote{margin:16px 0;padding:2px 0 2px 18px;border-left:3px solid var(--sage);color:var(--ink-2);font-style:italic}
+code{font-family:var(--mono);font-size:.85em;background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:1px 5px;word-break:break-word}
+ul{padding-left:20px;max-width:66ch}li{margin-bottom:7px}
+.foot{margin-top:60px;padding-top:22px;border-top:1px solid var(--rule);font-family:var(--sans);font-size:13px;color:var(--ink-3)}
+a{color:var(--navy)}
+.tbl-wrap{overflow-x:auto}
+</style>
+
+<div class="wrap">
+
+<span class="label">Search audit &middot; 19 August 2026</span>
+<h1>The Sussex Cove Gardening Company</h1>
+<p class="lede">The website itself is built well. What's holding you back is that it's two days old and has no reviews yet. Here's what to do about it, and what to ignore.</p>
+<div class="meta">
+  <span>thesussexcovegardeningcompany.co.uk</span>
+  <span>Checked by hand, not by a scanning tool</span>
+</div>
+
+<hr class="rule">
+
+<h2>Where you stand today</h2>
+<p>Three facts, checked this morning. None of them are a criticism of the site, they're just where a brand-new business starts.</p>
+
+<div class="grid g3" style="margin-top:18px">
+  <div class="stat"><div class="num" style="color:var(--crit)">0</div><p>Pages of yours in Google. Searching <code>site:</code> your domain returns nothing at all yet.</p></div>
+  <div class="stat"><div class="num" style="color:var(--crit)">0</div><p>Google reviews. Every competitor who outranks you has them.</p></div>
+  <div class="stat"><div class="num" style="color:var(--warn)">#1</div><p>Position held by a dead web address when someone searches your business name.</p></div>
+</div>
+
+<div class="card">
+  <span class="chip c-warn">Being handled</span>
+  <h3 style="margin-top:10px">That dead address at the top of Google</h3>
+  <p>When your site was being built it lived temporarily at <code>sussexcovegardening.com</code>. That temporary address is switched off now, but Google hasn't caught up, so it still sits at the top of the results for your own business name, and your real website isn't showing at all yet.</p>
+  <p style="margin-bottom:0">This fixes itself. Google drops addresses it can no longer reach, usually within a couple of weeks, and your real site was formally submitted to Google today. Nothing for you to do.</p>
+</div>
+
+<h2>How the website scores</h2>
+<p>Scored across the seven areas a search audit normally covers. The build quality is genuinely strong; the weak scores are all about age and content depth, not craftsmanship.</p>
+
+<div class="tbl-wrap">
+<table class="scores">
+  <thead><tr><th>Area</th><th style="width:32%">&nbsp;</th><th>Score</th></tr></thead>
+  <tbody>
+    <tr><td>Technical foundations</td><td><div class="bar"><i style="width:91%"></i></div></td><td class="sc">91</td></tr>
+    <tr><td>Speed</td><td><div class="bar"><i style="width:95%"></i></div></td><td class="sc">95</td></tr>
+    <tr><td>Images</td><td><div class="bar"><i style="width:90%"></i></div></td><td class="sc">90</td></tr>
+    <tr><td>Data for Google (structured markup)</td><td><div class="bar"><i style="width:75%"></i></div></td><td class="sc">75</td></tr>
+    <tr><td>Page wording and headings</td><td><div class="bar"><i style="width:60%"></i></div></td><td class="sc">60</td></tr>
+    <tr><td>AI assistant readiness</td><td><div class="bar"><i style="width:58%"></i></div></td><td class="sc">58</td></tr>
+    <tr><td>Content depth and trust signals</td><td><div class="bar"><i style="width:54%"></i></div></td><td class="sc">54</td></tr>
+    <tr><td><strong>Overall</strong></td><td><div class="bar"><i style="width:72%"></i></div></td><td class="sc"><strong>72</strong></td></tr>
+    <tr><td>Local findability <span class="chip c-crit" style="margin-left:6px">the real gap</span></td><td><div class="bar"><i style="width:37%;background:var(--crit)"></i></div></td><td class="sc" style="color:var(--crit)">37</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>What's already right</h2>
+<p>Worth knowing, because if anyone offers to sell you an "SEO package", these are the things they'd normally charge you to fix, and they're already done.</p>
+<ul>
+  <li><strong>Speed is excellent.</strong> Measured on a simulated slow phone connection: the main image appears in 1.4 seconds, nothing jumps about while loading, and the page arrives in 12 requests weighing 0.3&nbsp;MB. Google's pass mark for that first figure is 2.5 seconds.</li>
+  <li><strong>Google can read everything.</strong> Nothing is blocked, the sitemap is valid, and all four versions of your web address (with and without www, secure and not) land correctly on one address.</li>
+  <li><strong>Your business details are machine-readable.</strong> The page carries hidden structured data telling Google your name, phone, services and all six towns you cover.</li>
+  <li><strong>The security padlock is correct</strong> and covers both versions of your address.</li>
+  <li><strong>Every link works.</strong> All of them tested: WhatsApp, Facebook, Instagram, Nextdoor, your Google listing.</li>
+  <li><strong>Calling you is one tap</strong> from anywhere on the page, on any device.</li>
+</ul>
+
+<h2>The one thing that matters most</h2>
+<p>If you only do one thing on this whole document, do this one. Here's the evidence rather than just the advice. This is the top result today when someone in Lancing searches for a gardener:</p>
+<blockquote>"8 Gardeners in Lancing &middot; Expect to pay between &pound;336 and &pound;814 &middot; 5.0 &#9733; (83)"</blockquote>
+<p>Two things are winning that spot: <strong>a price</strong> and <strong>reviews</strong>. Every single competitor ranking above you has both. You currently have neither on show. Reviews are also the thing Google leans on hardest to decide who appears in the map results, and it's completely free.</p>
+<p style="margin-bottom:0">Ask every happy customer, starting with the olive tree one. Your Google listing has a "Ask for reviews" share link built in: text or WhatsApp it the moment you finish a job, while they're still standing in the tidy garden looking pleased.</p>
+
+<h2>Your jobs, in order</h2>
+<p>Ranked by what actually moves the needle per minute of your time. The first three are worth more than everything else combined.</p>
+
+<div class="card" style="padding:4px 22px">
+  <div class="task"><span class="n">1</span><div><h3>Ask for a Google review after every job</h3><p>Text the review link the same day. Aim for five in the next month. Nothing else on this list comes close to this for getting found.</p><div class="tags"><span class="chip c-crit">Highest impact</span><span class="chip c-good">2 minutes a job</span></div></div></div>
+  <div class="task"><span class="n">2</span><div><h3>Check your Google listing hides your home address</h3><p>You go to customers, they don't come to you, so it should show your service area rather than your front door. In the Google Business app this is the "service area" setting.</p><div class="tags"><span class="chip c-warn">Privacy</span><span class="chip c-good">5 minutes, once</span></div></div></div>
+  <div class="task"><span class="n">3</span><div><h3>Decide a price you're happy to publish</h3><p>Not a full price list. One honest anchor, like "one-off tidy-ups typically start from &pound;X" or an hourly rate. Every competitor shows one and it's the first thing customers look for. Tell us the number and we'll add it to the site.</p><div class="tags"><span class="chip c-crit">High impact</span><span class="chip c-good">A decision, not a task</span></div></div></div>
+  <div class="task"><span class="n">4</span><div><h3>Post a job photo to your Google listing weekly</h3><p>You're already taking these for Instagram. Reposting one a week signals to Google that the business is active.</p><div class="tags"><span class="chip c-warn">Medium impact</span><span class="chip c-good">1 minute a week</span></div></div></div>
+  <div class="task"><span class="n">5</span><div><h3>Get your insurance and waste licence numbers to us</h3><p>The site says "fully insured" and "licensed waste carrier". Adding the actual policy and licence numbers turns claims into proof, which matters to cautious customers.</p><div class="tags"><span class="chip c-warn">Trust</span><span class="chip c-good">Dig out two numbers</span></div></div></div>
+  <div class="task"><span class="n">6</span><div><h3>Flip one setting in your Adobe Fonts account</h3><p>Your font kit is set so text can briefly stay invisible while the font loads. Changing "font display" to "swap" in the Adobe Fonts dashboard makes text appear straight away. Measured saving: about 0.15 of a second.</p><div class="tags"><span class="chip c-warn">Small win</span><span class="chip c-good">2 minutes, once</span></div></div></div>
+  <div class="task"><span class="n">7</span><div><h3>Consider Checkatrade and Bark</h3><p>The two UK directories worth a gardener's time. Both cost money, so it's a business call, not an SEO one. Ignore Yelp, Angi, Houzz and the rest, they're not worth it here.</p><div class="tags"><span class="chip c-warn">Optional</span><span class="chip c-warn">Costs money</span></div></div></div>
+</div>
+
+<h2>Jobs on the website</h2>
+<p>These are ours, not yours. Listed so you know they're accounted for.</p>
+
+<div class="card" style="padding:4px 22px">
+  <div class="task"><span class="n">1</span><div><h3>Fix the main heading</h3><p>The page's biggest heading currently reads only "THE SUSSEX COVE", with no mention of gardening or anywhere you work. It's the single strongest signal on a page and it's being wasted.</p><div class="tags"><span class="chip c-crit">Biggest on-page fix</span></div></div></div>
+  <div class="task"><span class="n">2</span><div><h3>Shorten the Google listing text</h3><p>The description Google shows is too long and gets cut off mid-word, losing Steyning, Worthing, Findon, Ferring and "free quotations" before anyone reads them.</p><div class="tags"><span class="chip c-warn">Quick</span></div></div></div>
+  <div class="task"><span class="n">3</span><div><h3>Write real sentences pairing services with towns</h3><p>Nowhere does the page say something like "hedge trimming in Worthing". The six towns appear once, as a list. That's the phrase customers actually type.</p><div class="tags"><span class="chip c-crit">High impact</span></div></div></div>
+  <div class="task"><span class="n">4</span><div><h3>Remove your street address from the page's hidden data</h3><p>Your full address and postcode sit in the page's machine-readable data even though no visitor ever sees them. For someone who works from home that's worth closing. We'll show "based in Lancing" instead, which gives the local trust without the front door.</p><div class="tags"><span class="chip c-warn">Privacy</span></div></div></div>
+  <div class="task"><span class="n">5</span><div><h3>Add a simple enquiry form</h3><p>Right now the only ways to reach you are phone, WhatsApp and email. People comparing quotes at 9pm often won't ring a stranger. A short "postcode and what needs doing" form catches them.</p><div class="tags"><span class="chip c-warn">Medium impact</span></div></div></div>
+  <div class="task"><span class="n">6</span><div><h3>Trim the photo gallery's data use</h3><p>Nothing loads until someone scrolls to it, which is right. But once they do, it pulls about 1.9&nbsp;MB of photos. We can roughly halve that by letting the browser pick a smaller size on smaller screens.</p><div class="tags"><span class="chip c-warn">Minor</span></div></div></div>
+  <div class="task"><span class="n">7</span><div><h3>Show reviews on the site once you have them</h3><p>As soon as three or four land on Google, they go on the page too. This is the fix for the weakest area in the whole audit.</p><div class="tags"><span class="chip c-warn">Waiting on you</span></div></div></div>
+</div>
+
+<h2>Not worth your money</h2>
+<p>If someone approaches offering SEO services, this is the list to push back with. Everything here was genuinely considered and rejected for your specific situation.</p>
+<ul>
+  <li><strong>A page for every town.</strong> Six near-identical "Gardener in [Town]" pages, with no reviews or local photos to make them different, is the exact pattern Google discounts. Worth revisiting once you've got reviews and jobs to show in each place, not now.</li>
+  <li><strong>A blog.</strong> Weekly gardening articles are a poor use of a one-man band's evenings. Reviews will out-earn them many times over.</li>
+  <li><strong>Star ratings in the site's code before you have real reviews.</strong> Google treats invented ratings as spam and the penalty is severe.</li>
+  <li><strong>"AI SEO" extras like an llms.txt file.</strong> Built for large sites with hundreds of pages. Nothing to gain here.</li>
+  <li><strong>Yelp, Angi, Houzz, Porch, BBB.</strong> Either American, or no longer meaningful for UK trades.</li>
+  <li><strong>Backlink packages.</strong> Nothing about your situation is solved by bought links, and they carry real risk.</li>
+</ul>
+
+<h2>What to expect, honestly</h2>
+<p>No one can make a two-day-old website rank quickly, and anyone promising otherwise is selling something. A realistic path:</p>
+<ul>
+  <li><strong>Next week or two:</strong> your site gets indexed and starts showing up when someone searches your business name. The dead address drops away.</li>
+  <li><strong>Next month or two:</strong> with reviews coming in steadily, you start appearing in the map results for searches near Lancing and Shoreham.</li>
+  <li><strong>Longer:</strong> the further towns, Findon and Ferring, take longest. How close you are to the person searching is one of the biggest factors in local results, and nothing on a website overrides that.</li>
+</ul>
+<p>The honest summary: your website is not what's holding you back. Time and reviews are, and only one of those is in your control.</p>
+
+<div class="foot">
+  <p style="margin:0">Audit carried out 19 August 2026 across technical setup, content, structured data, speed, local search, AI-assistant readiness and search experience. Every figure quoted was measured directly against the live site rather than taken from a scanning tool. Speed measured on a simulated 1.6&nbsp;Mbps mobile connection with a four-times slowed processor.</p>
+</div>
+
+</div>
