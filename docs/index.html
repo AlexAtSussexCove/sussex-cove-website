@@ -857,8 +857,7 @@ a.social-chip:hover{border-color:var(--chalk);color:var(--chalk);transform:trans
             if (p.colorPalette && p.colorPalette.dominant) cell.style.background = "rgb(" + p.colorPalette.dominant + ")";
             const track = el("div", "ig-track");
             media.forEach((m, i) => {
-              const a = el("a", "ig-slide");
-              a.href = p.permalink; a.target = "_blank"; a.rel = "noopener";
+              const a = el("div", "ig-slide");
               const img = new Image(700, 700);
               img.src = pic(m);
               img.loading = "lazy"; img.decoding = "async";

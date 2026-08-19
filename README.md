@@ -129,7 +129,9 @@ The grid in the Recent work section feeds itself from Alex's Instagram through h
 (behold.so, free tier: 6 posts, refreshed roughly daily). The page fetches Behold's JSON feed directly
 (their endpoint is CORS-open and CDN-cached for exactly this) and draws its own grid: multi-photo posts
 get faint side arrows, swipe-with-snap on touch, Instagram-style dots and a stack badge, all in the
-site's own styling. Clicking a photo opens the post on Instagram. None of Behold's hosts sets cookies
+site's own styling. Photos deliberately are not links: an extra click while flicking through an album
+used to land on the photo and open Instagram in a new tab, so the Follow button below the grid is now
+the only path to Instagram. None of Behold's hosts sets cookies
 (checked), so the site still needs no cookie banner. If the feed is unreachable, the section quietly
 collapses to its heading and the Follow button.
 
