@@ -40,8 +40,8 @@ about the business, and the text that shows when someone shares the link. That i
 higher than what you can see.
 
 **What not to edit here:** the pictures (`mark.webp`, `mark-sm.webp`), the sharing image
-(`og-image.png`), and anything in `fonts/`. Also leave the `<behold-widget>` tag and the
-script next to it alone. Ask for those to be redone properly.
+(`og-image.png`), and anything in `fonts/`. Also leave the Recent work gallery
+script block alone. Ask for those to be redone properly.
 
 ---
 
@@ -126,9 +126,12 @@ at the real 66px size the disc peeked past the artwork and read as a misaligned 
 ## The Instagram gallery ("Recent work")
 
 The grid in the Recent work section feeds itself from Alex's Instagram through his **Behold** account
-(behold.so, free tier: 6 posts, refreshed roughly daily). The page loads Behold's widget script and
-their image CDN; none of their three hosts sets cookies (checked), so the site still needs no cookie
-banner.
+(behold.so, free tier: 6 posts, refreshed roughly daily). The page fetches Behold's JSON feed directly
+(their endpoint is CORS-open and CDN-cached for exactly this) and draws its own grid: multi-photo posts
+get faint side arrows, swipe-with-snap on touch, Instagram-style dots and a stack badge, all in the
+site's own styling. Clicking a photo opens the post on Instagram. None of Behold's hosts sets cookies
+(checked), so the site still needs no cookie banner. If the feed is unreachable, the section quietly
+collapses to its heading and the Follow button.
 
 **If the gallery ever goes blank:** Alex signs in at behold.so and reconnects Instagram. Behold emails
 the account holder when that is needed. Nothing in this repository has to change; the `feed-id` on the
